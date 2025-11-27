@@ -8,13 +8,14 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
  
 
-@Document
+@Document(collection = "item")
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 
 public class Item {
     @Id
-     private String title;
+    private String uuid;
+    private String title;
     private String description;
 }
