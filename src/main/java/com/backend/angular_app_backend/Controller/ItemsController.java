@@ -8,16 +8,13 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @RestController
 public class ItemsController {
 
     private final ItemRepo itemRepository;
-    private List<Item> items = new ArrayList<>();
-
-    public ItemsController(ItemRepo itemRepository) {
+     public ItemsController(ItemRepo itemRepository) {
         this.itemRepository = itemRepository;
     }
 
@@ -26,9 +23,9 @@ public class ItemsController {
         return itemRepository.findAll();
     }
 
+ 
     @PostMapping("/items")
     public Item addItem(@RequestBody Item item) {
-        items.add(item);
-        return item;
+        return itemRepository.save(item);
     }
 }
