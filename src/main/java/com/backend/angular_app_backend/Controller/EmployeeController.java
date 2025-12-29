@@ -1,15 +1,16 @@
 package com.backend.angular_app_backend.Controller;
-import org.springframework.web.bind.annotation.RestController;
+import java.util.List;
 
-import com.backend.Model.Employee;
-import com.backend.angular_app_backend.Repository.EmployeeRepo;
-
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-import java.util.List;
+import org.springframework.web.bind.annotation.RestController;
+
+import com.backend.Model.Employee;
+import com.backend.angular_app_backend.Repository.EmployeeRepo;
 
 @RestController
 public class EmployeeController {
@@ -29,9 +30,15 @@ public class EmployeeController {
         return employeeRepository.save(employee);
     }
 
-    @DeleteMapping("employees/{id}")
-    public void deleteEmployee(@PathVariable String id) {
+    @DeleteMapping("/employees/{id}")
+    public ResponseEntity<Void> deleteEmployee(@PathVariable String id) {
+        System.out.println("Deleting employee with id: " + id);
+        if (!employeeRepository.existsById(id)) {
+            return ResponseEntity.notFound().build();
+        }
+
         employeeRepository.deleteById(id);
+        return ResponseEntity.noContent().build(); // 204
     }
     
 }

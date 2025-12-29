@@ -15,7 +15,7 @@ import lombok.NoArgsConstructor;
 public class Employee {
 
     @Id
-    private String _id;
+    private String id;
 
     @Field("employeeId")
     private String employeeId;

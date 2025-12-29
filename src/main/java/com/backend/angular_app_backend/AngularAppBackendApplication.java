@@ -20,8 +20,5 @@ public class AngularAppBackendApplication {
     public void checkMongoDb() {
         System.out.println("Mongo DB connected to: " + factory.getMongoDatabase().getName());
     }
-
     
-   
-
 }
