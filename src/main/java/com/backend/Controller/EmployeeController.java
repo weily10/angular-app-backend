@@ -1,4 +1,4 @@
-package com.backend.angular_app_backend.Controller;
+package com.backend.Controller;
 import java.util.List;
 
 import org.springframework.http.ResponseEntity;
@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.backend.Model.Employee;
-import com.backend.angular_app_backend.Repository.EmployeeRepo;
+import com.backend.Repository.EmployeeRepo;
 
 @RestController
 public class EmployeeController {

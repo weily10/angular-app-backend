@@ -1,4 +1,4 @@
-package com.backend.angular_app_backend;
+package com.backend;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
