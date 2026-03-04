@@ -1,8 +1,10 @@
 package com.backend.Controller;
 
+import com.backend.dto.RegisterRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -23,17 +25,31 @@ import com.backend.Repository.UserRepository;
 
 
 @RestController
-@RequestMapping("/api/users")
+@RequestMapping("/auth")
 @CrossOrigin(origins = "http://localhost:4200")
 public class UserController {
 
 
     @Autowired
     private UserRepository userRepo;
-
+    @Autowired
+    private PasswordEncoder passwordEncoder;
     @PostMapping("/register")
-    public User registerUser(@RequestBody User user) {
-        return userRepo.save(user);
+    public ResponseEntity<?> registerUser(@RequestBody RegisterRequest regData) {
+        if(userRepo.existsByEmail(regData.getEmail())){
+            return ResponseEntity.status(HttpStatus.CONFLICT).body("Error: email already in use");
+        }
+
+        if(!regData.getPassword().equals(regData.getConfirmPassword())){
+            return ResponseEntity.badRequest().body("passwords dont match");
+        }
+
+        User user  = new User();
+        user.setEmail(regData.getEmail());
+        user.setPassword(passwordEncoder.encode(regData.getConfirmPassword()));
+
+        User savedUser = userRepo.save(user);
+        return ResponseEntity.ok(savedUser);
     }
 
     @PostMapping("/login")
