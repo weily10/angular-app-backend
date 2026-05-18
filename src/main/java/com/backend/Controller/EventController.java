@@ -82,4 +82,9 @@ public class EventController {
             return null;
         }
     }
+
+    @GetMapping("/{id}")
+    public ResponseEntity<Event> getEventById(@PathVariable String id){
+        return eventService.getEventById(id).map(ResponseEntity::ok).orElse(ResponseEntity.notFound().build());
+    }
 }
