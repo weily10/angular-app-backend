@@ -59,9 +59,10 @@ public class UserController {
     @PostMapping("/login")
     public ResponseEntity<?> loginUser(@RequestBody User loginData) {
 
-        User user = userRepo.findByEmail(loginData.getEmail());
+        User user = userRepo.findByEmail(loginData.getEmail())
+                .orElse(null);
 
-         if (user == null) {
+        if (user == null) {
             System.out.println("Login Failed: User not found with email: " + loginData.getEmail());
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("invalid credentials");
         }

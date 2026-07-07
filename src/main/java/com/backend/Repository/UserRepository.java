@@ -1,13 +1,13 @@
 package com.backend.Repository;
 
+import com.backend.Model.User;
 import org.springframework.data.mongodb.repository.MongoRepository;
 
-import com.backend.Model.User;
+import java.util.Optional;
 
 public interface UserRepository extends MongoRepository<User, String> {
 
     boolean existsByEmail(String email);
 
-    User findByEmail(String email);
-
+    Optional<User> findByEmail(String email);
 }

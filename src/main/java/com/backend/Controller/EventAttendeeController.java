@@ -5,6 +5,8 @@ import com.backend.services.EventAttendeeService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.security.Principal;
+
 @RestController
 @RequestMapping("/api/events")
 @CrossOrigin(origins = "http://localhost:4200")
@@ -20,10 +22,10 @@ public class EventAttendeeController {
     @PostMapping("/{eventId}/join")
     public ResponseEntity<?> joinEvent(
             @PathVariable String eventId,
-            @RequestParam String userId) {
+            Principal principal) {
         try {
-            EventAttendee registration = attendeeService.joinEvent(eventId, userId);
-            return ResponseEntity.ok(registration);
+            String usernameOrId = principal.getName();
+            return ResponseEntity.ok(attendeeService.joinEvent(eventId, usernameOrId));
         } catch (IllegalStateException e) {
             // Returns a 400 Bad Request with the custom "already joined" message
             return ResponseEntity.badRequest().body(e.getMessage());
