@@ -31,5 +31,7 @@ public class EventAttendeeService {
         return attendeeRepo.findByEventId(eventId);
     }
 
-
+    public long getAttendeeCount(String eventId) {
+        return attendeeRepo.countByEventId(eventId);
+    }
 }

@@ -21,6 +21,5 @@ public class Event {
     private String location;
     private Instant date;
     private String summary;
-    private Integer attenders;
     private String imgUrl; //
 }

@@ -1,6 +1,7 @@
 package com.backend.services;
 
 import com.backend.Model.Event;
+import com.backend.Repository.EventAttendeeRepo;
 import com.backend.Repository.EventsRepo;
 import org.springframework.stereotype.Service;
 
@@ -11,9 +12,9 @@ import java.util.Optional;
 public class EventService {
     private final EventsRepo eventsRepo;
 
-    public EventService(EventsRepo eventsRepo) {
+    public EventService(EventsRepo eventsRepo,EventAttendeeRepo  eventAttendeeRepo) {
         this.eventsRepo = eventsRepo;
-    }
+     }
 
     public Event addEvent(Event event) {
         return eventsRepo.save(event);
@@ -26,5 +27,7 @@ public class EventService {
     public Optional<Event> getEventById(String id) {
         return eventsRepo.findById(id);
     }
+
+
 
 }

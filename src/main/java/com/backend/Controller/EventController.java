@@ -66,8 +66,7 @@ public class EventController {
         event.setLocation(request.getLocation());
         event.setDate(request.getDate());
         event.setSummary(request.getSummary());
-        event.setAttenders(request.getAttenders());
-        event.setImgUrl(generatedImageUrl);
+         event.setImgUrl(generatedImageUrl);
 
         // 3. Save to MongoDB
         return ResponseEntity.ok(eventRepository.save(event));

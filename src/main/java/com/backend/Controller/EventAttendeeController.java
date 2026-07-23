@@ -2,10 +2,12 @@ package com.backend.Controller;
 
 import com.backend.Model.EventAttendee;
 import com.backend.services.EventAttendeeService;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.security.Principal;
+import java.util.List;
 
 @RestController
 @RequestMapping("/api/events")
@@ -33,4 +35,17 @@ public class EventAttendeeController {
             return ResponseEntity.status(500).body("An internal error occurred.");
         }
     }
+
+    @GetMapping("/{eventId}/attendees")
+    public ResponseEntity<?> getAttendees(@PathVariable String eventId) {
+        try {
+            List<EventAttendee> attendees = attendeeService.getAttendeesForEvent(eventId);
+            return ResponseEntity.ok(attendees);
+        } catch (RuntimeException e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
+        }
+    }
+
+
+
 }
