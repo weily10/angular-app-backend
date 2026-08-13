@@ -1,4 +1,4 @@
-package com.backend.config;
+package com.backend.Config;
 
 import com.backend.services.JwtService;
 import jakarta.servlet.FilterChain;

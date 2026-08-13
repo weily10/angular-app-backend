@@ -16,8 +16,8 @@ import java.time.LocalDateTime;
 public class EventAttendee {
     @Id
     private String id;
-    private String eventId;  // References the Event ID
-    private String userId;   // References the User ID
+    private String eventId;
+    private String userId;
     private Instant joinedAt;
     private String status;
 
