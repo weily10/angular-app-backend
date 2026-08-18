@@ -1,6 +1,8 @@
 package com.backend.Controller;
 
 import com.backend.Model.Event;
+import com.backend.Model.EventAttendee;
+import com.backend.Repository.EventAttendeeRepo;
 import com.backend.dto.EventRequest;
 import com.backend.services.EventService;
 import com.backend.Repository.EventsRepo;
@@ -25,6 +27,9 @@ public class EventController {
 
     @Autowired
     private EventsRepo eventRepository;
+
+    @Autowired
+    private EventAttendeeRepo attendeeRepository;
 
     public EventController(EventService eventService) {
         this.eventService = eventService;
@@ -67,6 +72,17 @@ public class EventController {
         event.setDate(request.getDate());
         event.setSummary(request.getSummary());
          event.setImgUrl(generatedImageUrl);
+
+        Event savedEvent = eventRepository.save(event);
+        if (savedEvent.getHostUserName() != null) {
+            EventAttendee hostAttendee = new EventAttendee();
+            hostAttendee.setEventId(savedEvent.getId());
+
+            // Use .getId() or .getUsername() depending on your User entity structure
+            hostAttendee.setUserId(savedEvent.getHostUserName().getId());
+
+            attendeeRepository.save(hostAttendee);
+        }
 
         // 3. Save to MongoDB
         return ResponseEntity.ok(eventRepository.save(event));
