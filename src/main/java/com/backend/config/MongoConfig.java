@@ -1,4 +1,4 @@
-package com.backend.Config;
+package com.backend.config;
 
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.mongodb.config.EnableMongoAuditing;

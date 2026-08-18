@@ -1,22 +1,21 @@
-package com.backend.Controller;
+package com.backend.controller;
 
-import com.backend.Model.Event;
-import com.backend.Model.EventAttendee;
-import com.backend.Repository.EventAttendeeRepo;
 import com.backend.dto.EventRequest;
+import com.backend.model.Event;
+import com.backend.model.EventAttendee;
+import com.backend.repository.EventAttendeeRepo;
+import com.backend.repository.EventsRepo;
 import com.backend.services.EventService;
-import com.backend.Repository.EventsRepo;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.beans.factory.annotation.Autowired;
 
-// IMPORTANT: Added these imports for file handling
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.UUID;
 import java.util.List;
+import java.util.UUID;
 
 @RestController
 @RequestMapping("/api/events")
@@ -72,6 +71,7 @@ public class EventController {
         event.setDate(request.getDate());
         event.setSummary(request.getSummary());
          event.setImgUrl(generatedImageUrl);
+         event.setActive(1);
 
         Event savedEvent = eventRepository.save(event);
         if (savedEvent.getHostUserName() != null) {

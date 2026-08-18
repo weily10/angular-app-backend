@@ -1,7 +1,7 @@
-package com.backend.Security;
+package com.backend.security;
 
-import com.backend.Repository.UserRepository;
-import com.backend.Model.User; //  CHANGE THIS to point to your custom User entity!
+import com.backend.model.User;
+import com.backend.repository.UserRepository;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;

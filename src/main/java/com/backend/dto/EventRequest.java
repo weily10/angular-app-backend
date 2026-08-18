@@ -5,7 +5,6 @@ import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.time.Instant;
-import java.util.Date;
 
 @Data
 public class EventRequest {

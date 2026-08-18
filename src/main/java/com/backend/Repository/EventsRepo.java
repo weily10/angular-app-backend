@@ -1,7 +1,7 @@
-package com.backend.Repository;
-import org.springframework.data.mongodb.repository.MongoRepository;
+package com.backend.repository;
 
-import com.backend.Model.Event;
+import com.backend.model.Event;
+import org.springframework.data.mongodb.repository.MongoRepository;
 
 import java.util.List;
 

@@ -1,24 +1,17 @@
-package com.backend.Controller;
+package com.backend.controller;
 
 import com.backend.dto.RegisterRequest;
+import com.backend.model.User;
+import com.backend.repository.UserRepository;
 import com.backend.services.JwtService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
-import io.jsonwebtoken.Jwts;
-import io.jsonwebtoken.security.Keys;
-import javax.crypto.SecretKey;
-import java.nio.charset.StandardCharsets;
-import io.jsonwebtoken.SignatureAlgorithm;
 
-import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
-
-import com.backend.Model.User;
-import com.backend.Repository.UserRepository;
 
 
 @RestController

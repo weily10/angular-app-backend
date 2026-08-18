@@ -1,4 +1,4 @@
-package com.backend.Model;
+package com.backend.model;
 
 
 import lombok.AllArgsConstructor;
@@ -26,4 +26,5 @@ public class Event {
     private String imgUrl; //
     @CreatedBy
     private User hostUserName;
+    private Integer active;
 }

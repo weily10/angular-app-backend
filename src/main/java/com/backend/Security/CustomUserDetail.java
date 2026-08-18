@@ -1,9 +1,10 @@
-package com.backend.Security;
+package com.backend.security;
 
-import com.backend.Model.User; // Your MongoDB User model
+import com.backend.model.User;
 import lombok.Getter;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
+
 import java.util.Collection;
 import java.util.Collections;
 

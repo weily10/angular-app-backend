@@ -1,10 +1,10 @@
 package com.backend.services;
 
-import com.backend.Model.Event;
-import com.backend.Model.EventAttendee;
-import com.backend.Model.User;
-import com.backend.Repository.EventAttendeeRepo;
-import com.backend.Repository.EventsRepo;
+import com.backend.model.Event;
+import com.backend.model.EventAttendee;
+import com.backend.model.User;
+import com.backend.repository.EventAttendeeRepo;
+import com.backend.repository.EventsRepo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -49,7 +49,5 @@ public class EventAttendeeService {
         return attendeeRepo.findByEventId(eventId);
     }
 
-    public long getAttendeeCount(String eventId) {
-        return attendeeRepo.countByEventId(eventId);
-    }
+
 }

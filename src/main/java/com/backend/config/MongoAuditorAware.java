@@ -1,7 +1,7 @@
-package com.backend.Config;
+package com.backend.config;
 
-import com.backend.Model.User;
-import com.backend.Repository.UserRepository;
+import com.backend.model.User;
+import com.backend.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.AuditorAware;
 import org.springframework.security.core.Authentication;

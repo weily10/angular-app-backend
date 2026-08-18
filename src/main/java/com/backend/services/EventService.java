@@ -1,8 +1,8 @@
 package com.backend.services;
 
-import com.backend.Model.Event;
-import com.backend.Repository.EventAttendeeRepo;
-import com.backend.Repository.EventsRepo;
+import com.backend.model.Event;
+import com.backend.repository.EventAttendeeRepo;
+import com.backend.repository.EventsRepo;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -16,9 +16,6 @@ public class EventService {
         this.eventsRepo = eventsRepo;
      }
 
-    public Event addEvent(Event event) {
-        return eventsRepo.save(event);
-    }
 
     public List<Event> getEvents(){
         return eventsRepo.findAll();
