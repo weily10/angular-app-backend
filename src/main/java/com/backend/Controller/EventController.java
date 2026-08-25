@@ -1,14 +1,20 @@
 package com.backend.controller;
 
+import com.backend.Model.User;
 import com.backend.dto.EventRequest;
-import com.backend.model.Event;
-import com.backend.model.EventAttendee;
+import com.backend.Model.Event;
+import com.backend.Model.EventAttendee;
 import com.backend.repository.EventAttendeeRepo;
 import com.backend.repository.EventsRepo;
+import com.backend.repository.UserRepository;
 import com.backend.services.EventService;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.io.IOException;
 import java.nio.file.Files;
@@ -17,6 +23,7 @@ import java.nio.file.Paths;
 import java.util.List;
 import java.util.UUID;
 
+@Slf4j
 @RestController
 @RequestMapping("/api/events")
 @CrossOrigin(origins = "http://localhost:4200")
@@ -25,9 +32,8 @@ public class EventController {
     private final EventService eventService;
 
     @Autowired
+    private UserRepository userRepository;
     private EventsRepo eventRepository;
-
-    @Autowired
     private EventAttendeeRepo attendeeRepository;
 
     public EventController(EventService eventService) {
@@ -35,7 +41,7 @@ public class EventController {
     }
 
     @PostMapping(value = "/save", consumes = {"multipart/form-data"})
-    public ResponseEntity<Event> addEvent(@ModelAttribute EventRequest request) {
+    public ResponseEntity<Event> addEvent(@ModelAttribute EventRequest request, Authentication authentication) {
 
         String generatedImageUrl = "";
 
@@ -43,7 +49,7 @@ public class EventController {
         if (request.getFile() != null && !request.getFile().isEmpty()) {
             try {
                 // Create a unique filename so 'cat.jpg' doesn't overwrite another 'cat.jpg'
-                String fileName = UUID.randomUUID().toString() + "_" + request.getFile().getOriginalFilename();
+                String fileName = UUID.randomUUID() + "_" + request.getFile().getOriginalFilename();
 
                 // Point to the 'uploads' folder in your project root
                 String uploadDir = "uploads/";
@@ -66,12 +72,18 @@ public class EventController {
 
         // 2. Map DTO to Entity
         Event event = new Event();
+
+        String username = authentication.getName();
+        User currentUser = userRepository.findByEmail(username)
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "User not found"));
+
         event.setTitle(request.getTitle());
         event.setLocation(request.getLocation());
         event.setDate(request.getDate());
         event.setSummary(request.getSummary());
          event.setImgUrl(generatedImageUrl);
          event.setActive(1);
+        event.setHostUserName(currentUser);
 
         Event savedEvent = eventRepository.save(event);
         if (savedEvent.getHostUserName() != null) {
@@ -101,5 +113,18 @@ public class EventController {
     @GetMapping("/{id}")
     public ResponseEntity<Event> getEventById(@PathVariable String id){
         return eventService.getEventById(id).map(ResponseEntity::ok).orElse(ResponseEntity.notFound().build());
+    }
+
+    @PutMapping("/{eventId}/{hostId}/cancelEvent")
+    public ResponseEntity<Long> cancelEvent(
+            @PathVariable("eventId") String eventId,
+            @PathVariable("hostId") String hostId) {
+        try {
+            System.out.println("hostId: " + hostId);
+            return ResponseEntity.ok(eventService.cancelEvent(eventId, hostId));
+        } catch (RuntimeException e) {
+            log.error("Failed to cancel event {} for host {}: {}", eventId, hostId, e.getMessage(), e);
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
+        }
     }
 }

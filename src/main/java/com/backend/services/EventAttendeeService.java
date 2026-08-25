@@ -1,12 +1,14 @@
 package com.backend.services;
 
-import com.backend.model.Event;
-import com.backend.model.EventAttendee;
-import com.backend.model.User;
+import com.backend.Model.Event;
+import com.backend.Model.EventAttendee;
+import com.backend.Model.User;
 import com.backend.repository.EventAttendeeRepo;
 import com.backend.repository.EventsRepo;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
 
@@ -48,6 +50,7 @@ public class EventAttendeeService {
     public List<EventAttendee> getAttendeesForEvent(String eventId) {
         return attendeeRepo.findByEventId(eventId);
     }
+
 
 
 }

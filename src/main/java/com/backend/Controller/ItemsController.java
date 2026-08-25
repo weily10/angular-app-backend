@@ -1,6 +1,6 @@
 package com.backend.controller;
 
-import com.backend.model.Item;
+import com.backend.Model.Item;
 import com.backend.repository.ItemRepo;
 import org.springframework.web.bind.annotation.*;
 

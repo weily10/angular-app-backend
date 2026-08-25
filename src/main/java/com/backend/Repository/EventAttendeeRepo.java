@@ -1,6 +1,6 @@
 package com.backend.repository;
 
-import com.backend.model.EventAttendee;
+import com.backend.Model.EventAttendee;
 import org.springframework.data.mongodb.repository.MongoRepository;
 
 import java.util.List;

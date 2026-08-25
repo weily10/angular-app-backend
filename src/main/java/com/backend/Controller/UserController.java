@@ -1,7 +1,7 @@
 package com.backend.controller;
 
 import com.backend.dto.RegisterRequest;
-import com.backend.model.User;
+import com.backend.Model.User;
 import com.backend.repository.UserRepository;
 import com.backend.services.JwtService;
 import org.springframework.beans.factory.annotation.Autowired;

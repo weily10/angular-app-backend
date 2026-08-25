@@ -1,6 +1,6 @@
 package com.backend.security;
 
-import com.backend.model.User;
+import com.backend.Model.User;
 import lombok.Getter;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;

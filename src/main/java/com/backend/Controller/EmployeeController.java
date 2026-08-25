@@ -1,6 +1,6 @@
 package com.backend.controller;
 
-import com.backend.model.Employee;
+import com.backend.Model.Employee;
 import com.backend.repository.EmployeeRepo;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;

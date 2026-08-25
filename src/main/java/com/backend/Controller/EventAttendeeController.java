@@ -1,6 +1,6 @@
 package com.backend.controller;
 
-import com.backend.model.EventAttendee;
+import com.backend.Model.EventAttendee;
 import com.backend.services.EventAttendeeService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -47,14 +47,7 @@ public class EventAttendeeController {
     }
 
 
-//    @PutMapping("/{eventId}/{hostId}/cancelEvent")
-//    public ResponseEntity<?> cancelEvent(@PathVariable String eventId, String hostId) {
-//        try {
-//
-//        }catch(RuntimeException e) {
-//
-//        }
-//    }
+
 
 
 }

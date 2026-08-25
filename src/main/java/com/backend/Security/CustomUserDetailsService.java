@@ -1,6 +1,6 @@
 package com.backend.security;
 
-import com.backend.model.User;
+import com.backend.Model.User;
 import com.backend.repository.UserRepository;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
