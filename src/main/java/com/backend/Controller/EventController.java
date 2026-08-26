@@ -8,6 +8,7 @@ import com.backend.repository.EventAttendeeRepo;
 import com.backend.repository.EventsRepo;
 import com.backend.repository.UserRepository;
 import com.backend.services.EventService;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -30,14 +31,18 @@ import java.util.UUID;
 public class EventController {
 
     private final EventService eventService;
+    private final UserRepository userRepository;
+    private final EventsRepo eventRepository;
+    private final EventAttendeeRepo attendeeRepository;
 
-    @Autowired
-    private UserRepository userRepository;
-    private EventsRepo eventRepository;
-    private EventAttendeeRepo attendeeRepository;
-
-    public EventController(EventService eventService) {
+    public EventController(EventService eventService,
+                           UserRepository userRepository,
+                           EventsRepo eventRepository,
+                           EventAttendeeRepo attendeeRepository) {
         this.eventService = eventService;
+        this.userRepository = userRepository;
+        this.eventRepository = eventRepository;
+        this.attendeeRepository = attendeeRepository;
     }
 
     @PostMapping(value = "/save", consumes = {"multipart/form-data"})
@@ -73,8 +78,9 @@ public class EventController {
         // 2. Map DTO to Entity
         Event event = new Event();
 
-        String username = authentication.getName();
-        User currentUser = userRepository.findByEmail(username)
+        String email = authentication.getName();
+        System.out.print("assas"+email);
+        User currentUser = userRepository.findByEmail(email)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "User not found"));
 
         event.setTitle(request.getTitle());

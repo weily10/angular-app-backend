@@ -31,7 +31,7 @@ public class SecurityConfig {
                         // 1. Add this line to allow the browser's "pre-flight" check
                         .requestMatchers(org.springframework.http.HttpMethod.OPTIONS, "/**").permitAll()
                         .requestMatchers("/auth/**").permitAll()
-                        .requestMatchers("/api/events", "/api/events/**").permitAll()
+                        .requestMatchers("/api/events", "/api/events/**").authenticated()
                         .requestMatchers("/uploads/**").permitAll()
                         .anyRequest().authenticated()
                 )
