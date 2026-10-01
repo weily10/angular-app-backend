@@ -1,0 +1,26 @@
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "angular-app-backend",
+  "main": "src/index.ts",
+  "compatibility_date": "2026-09-01",
+  "containers": [
+    {
+      "class_name": "BackendContainer",
+      "image": "./Dockerfile"
+    }
+  ],
+  "durable_objects": {
+    "bindings": [
+      {
+        "name": "BACKEND_CONTAINER",
+        "class_name": "BackendContainer"
+      }
+    ]
+  },
+  "migrations": [
+    {
+      "tag": "v1",
+      "new_sqlite_classes": ["BackendContainer"]
+    }
+  ]
+}
