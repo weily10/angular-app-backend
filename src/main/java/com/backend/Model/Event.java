@@ -23,9 +23,10 @@ public class Event {
     private String location;
     private Instant date;
     private String summary;
-    private String imgUrl; //
-    @CreatedBy
+     @CreatedBy
     private User hostUserName;
     private Integer active;
     private String eventId;
+    private String imgUrl;
+    private String imagePublicId;
 }

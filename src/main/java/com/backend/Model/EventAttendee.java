@@ -22,10 +22,10 @@ public class EventAttendee {
 
 
     public EventAttendee(String eventId, String userId, String status) {
-        this.eventId = eventId;
-        this.userId = userId;
-        this.joinedAt = Instant.now();
-        this.status = status;
+        this.setEventId(eventId);
+        this.setUserId(userId);
+        this.setJoinedAt(Instant.now());
+        this.setStatus(status);
     }
 
 }
