@@ -7,10 +7,9 @@ import com.backend.Model.EventAttendee;
 import com.backend.repository.EventAttendeeRepo;
 import com.backend.repository.EventsRepo;
 import com.backend.repository.UserRepository;
+import com.backend.services.CloudinaryService;
 import com.backend.services.EventService;
-import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
@@ -22,6 +21,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.List;
+import java.util.Map;
 import java.util.UUID;
 
 @Slf4j
@@ -34,15 +34,19 @@ public class EventController {
     private final UserRepository userRepository;
     private final EventsRepo eventRepository;
     private final EventAttendeeRepo attendeeRepository;
+    private final CloudinaryService cloudinaryService;
 
     public EventController(EventService eventService,
                            UserRepository userRepository,
                            EventsRepo eventRepository,
-                           EventAttendeeRepo attendeeRepository) {
+                           EventAttendeeRepo attendeeRepository,
+                           CloudinaryService cloudinaryService) {
         this.eventService = eventService;
         this.userRepository = userRepository;
         this.eventRepository = eventRepository;
         this.attendeeRepository = attendeeRepository;
+        this.cloudinaryService = cloudinaryService;
+
     }
 
     @PostMapping(value = "/save", consumes = {"multipart/form-data"})
@@ -50,27 +54,14 @@ public class EventController {
 
         String generatedImageUrl = "";
 
-        // 1. PHYSICAL FILE SAVING LOGIC
-        if (request.getFile() != null && !request.getFile().isEmpty()) {
+         if (request.getFile() != null && !request.getFile().isEmpty()) {
             try {
-                // Create a unique filename so 'cat.jpg' doesn't overwrite another 'cat.jpg'
-                String fileName = UUID.randomUUID() + "_" + request.getFile().getOriginalFilename();
+                 Map uploadResult = cloudinaryService.uploadImage(request.getFile(), "event_images");
+                generatedImageUrl = (String) uploadResult.get("secure_url");
 
-                // Point to the 'uploads' folder in your project root
-                String uploadDir = "uploads/";
-                Path path = Paths.get(uploadDir + fileName);
-
-                // Create the folder if it doesn't exist
-                Files.createDirectories(path.getParent());
-
-                // WRITE the file bytes to your hard drive
-                Files.write(path, request.getFile().getBytes());
-
-                // This is the URL Angular will use to reach the file
-                generatedImageUrl = "http://localhost:8080/uploads/" + fileName;
 
             } catch (IOException e) {
-                System.out.println(">>> FILE ERROR: " + e.getMessage());
+                System.out.println(">>> CLOUDINARY ERROR: " + e.getMessage());
                 return ResponseEntity.internalServerError().build();
             }
         }
