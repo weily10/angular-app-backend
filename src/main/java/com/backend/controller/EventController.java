@@ -70,8 +70,7 @@ public class EventController {
         Event event = new Event();
 
         String email = authentication.getName();
-        System.out.print("assas"+email);
-        User currentUser = userRepository.findByEmail(email)
+         User currentUser = userRepository.findByEmail(email)
                 .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "User not found"));
 
         event.setTitle(request.getTitle());
@@ -97,10 +96,12 @@ public class EventController {
         return ResponseEntity.ok(eventRepository.save(event));
     }
 
-    @GetMapping("")
-    public List<Event> getEvents() {
+    @GetMapping("/mine")
+    public List<Event> getEvents(Authentication auth) {
         try {
-            return eventService.getEvents();
+             User currentUser = userRepository.findByEmail(auth.getName())
+                    .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND, "User not found"));
+            return eventRepository.findByHostUserNameId(currentUser.getId());
         } catch (Exception e) {
             e.printStackTrace();
             return null;
